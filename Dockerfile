@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # Installer les extensions PHP nécessaires
 RUN apk add --no-cache \
