@@ -21,6 +21,8 @@ class User extends Authenticatable
         'telephone',
         'valide',
         'forfait_actif_id',
+        'must_change_password',
+        'temp_password',
     ];
 
     protected $hidden = [
@@ -35,6 +37,7 @@ class User extends Authenticatable
             'password'          => 'hashed',
             'actif'             => 'boolean',
             'valide'            => 'boolean',
+            'must_change_password' => 'boolean',
         ];
     }
 

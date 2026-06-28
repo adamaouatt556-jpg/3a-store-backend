@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Auth
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/me',      [AuthController::class, 'me']);
+    Route::post('/auth/change-password', [AuthController::class, 'changePassword']);
 
     // Boutiques
     Route::apiResource('boutiques', BoutiqueController::class);
@@ -67,5 +68,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('inventaires/{inventaire}/valider',              [InventaireController::class, 'valider']);
     Route::post('inventaires/{inventaire}/annuler',              [InventaireController::class, 'annuler']);
     Route::put('inventaires/{inventaire}/lignes/{ligne}',        [InventaireController::class, 'updateLigne']);
+    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword']);
 
 });

@@ -69,6 +69,7 @@ class AuthController extends Controller
         return response()->json([
             'user'  => $user,
             'token' => $token,
+            'must_change_password' => $user->must_change_password,
         ]);
     }
 
@@ -85,6 +86,27 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Déconnexion réussie.',
+        ]);
+    }
+
+        // Changer le mot de passe (utilisateur connecté)
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'password'              => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required|string',
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'password'             => Hash::make($request->password),
+            'must_change_password' => false,
+            'temp_password'        => null,
+        ]);
+
+        return response()->json([
+            'message' => 'Mot de passe changé avec succès.',
         ]);
     }
 }

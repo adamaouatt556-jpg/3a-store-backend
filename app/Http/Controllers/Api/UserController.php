@@ -170,4 +170,28 @@ class UserController extends Controller
             'message' => 'Vendeur retiré de la boutique.'
         ]);
     }
+
+        // Réinitialiser le mot de passe (Super Admin)
+    public function resetPassword(Request $request, User $user)
+    {
+        if (!auth()->user()->isSuperAdmin()) {
+            return response()->json([
+                'message' => 'Action non autorisée.'
+            ], 403);
+        }
+
+        $request->validate([
+            'temp_password' => 'required|string|min:6',
+        ]);
+
+        $user->update([
+            'password'             => Hash::make($request->temp_password),
+            'must_change_password' => true,
+            'temp_password'        => $request->temp_password,
+        ]);
+
+        return response()->json([
+            'message' => 'Mot de passe réinitialisé. L\'utilisateur devra le changer à sa prochaine connexion.',
+        ]);
+    }
 }
